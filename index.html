@@ -12,20 +12,32 @@
         <section class="stage-panel">
 
             <div class="player-container"></div>
-            <div class="display-container"><span id="versus">VS</span></div>
+            <div class="display-container"><span class="display">VS</span></div>
             <div class="computer-container"></div>
 
         </section>
 
         <section class="control-panel">
 
-            <div class="scoring-container"></div>
+            <div class="scoring-container">
+
+            </div>
 
             <div class="gestures-container">
                 <div class="gesture-box-front">
-                    <div class="btn gesture-btn" id="Rock"></div>
-                    <div class="btn gesture-btn" id="Paper"></div>
-                    <div class="btn gesture-btn" id="Scissor"></div>
+
+                    <div class="btn gesture-btn" id="Rock">
+                        <img class='gesture-img' src="gestures/rock.png" alt="">
+                    </div>
+
+                    <div class="btn gesture-btn" id="Paper">
+                        <img class='gesture-img' src="gestures/paper.png" alt="">
+                    </div>
+
+                    <div class="btn gesture-btn" id="Scissor">
+                        <img class='gesture-img' src="gestures/scissor.png" alt="">
+                    </div>
+                    
                 </div>
                 <div class="gesture-box-back">
                     <div class="gesture-btn-edge"></div>
@@ -36,7 +48,7 @@
 
             <div class="menu-container">
                 <div class="menu-box-front">
-                    <div class="btn menu-btn"></div>
+                    <div class="btn menu-btn" id="reset"></div>
                     <div class="btn menu-btn"></div>
                 </div>
                 <div class="menu-box-back">
