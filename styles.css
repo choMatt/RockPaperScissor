@@ -78,6 +78,8 @@ body{
 .gesture-btn{
     background-color:#FFBABA ;
     z-index: 1;
+    transition: transform 50ms ease-in-out;
+
 }
 
 .gesture-btn-edge{
@@ -93,7 +95,7 @@ body{
     flex-direction: column;
     gap: 1.4em;
     position: absolute;
-    bottom:2.7em;
+    bottom:2.6em;
     right: 13px;
 }
 
@@ -112,12 +114,18 @@ body{
 .menu-btn{
     background-color:#FFBABA ;
     z-index: 1;
+    transition: transform 50ms ease-in-out;
 }
 
 .menu-btn-edge{
     background-color: #9E5D5D;
 }
 
+
+.btn-clicked{
+    transform: translateY(7px);
+    transition: transform 50ms ease-in-out;
+}
 
 
 
