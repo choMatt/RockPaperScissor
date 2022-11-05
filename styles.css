@@ -5,6 +5,7 @@
 
 body{
     width: inherit; height: inherit;
+    font-family: 'Quicksand', sans-serif;
 }
 
 /** Panels */
@@ -28,9 +29,19 @@ body{
 .player-container,
 .display-container,
 .computer-container{
-    width: 25em;height: 40em; 
-    border: 3px solid black;
+    width: 100%;height: 40em; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
+
+.player-container,
+.computer-container{
+    gap: 2em;
+}
+
 
 /** Controls-Containers */
 
@@ -49,6 +60,25 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+
+/** Display */
+
+.text-display{
+    font-size: 5vmin;
+}
+
+.gesture-display{
+    width: 25vmin;
+    user-select: none;
+
+}
+
+.player-display{
+    font-size: 1.6em;
+
 }
 
 /** Gesture buttons box  */

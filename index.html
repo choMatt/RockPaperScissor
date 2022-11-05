@@ -5,15 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
     <title>Rock, Paper, Scissor Game</title>
 </head>
 <body>
     <main class="main-window">
         <section class="stage-panel">
 
-            <div class="player-container"></div>
-            <div class="display-container"><span class="display">VS</span></div>
-            <div class="computer-container"></div>
+            <div class="player-container">
+                <span class="player-display">YOU</span>
+                <img class="gesture-display" src="gestures/Rock.png" >
+            </div>
+            
+            <div class="display-container">
+                <span class="text-display">VS</span>
+            </div>
+            
+            <div class="computer-container">
+                <span class="player-display">COMPUTER</span>
+                <img class="gesture-display" src="gestures/Paper.png" >
+            </div>
 
         </section>
 
@@ -27,15 +40,15 @@
                 <div class="gesture-box-front">
 
                     <div class="btn gesture-btn" id="Rock">
-                        <img class='gesture-img' src="gestures/rock.png" alt="">
+                        <img class='gesture-img' src="gestures/Rock.png" alt="">
                     </div>
 
                     <div class="btn gesture-btn" id="Paper">
-                        <img class='gesture-img' src="gestures/paper.png" alt="">
+                        <img class='gesture-img' src="gestures/Paper.png" alt="">
                     </div>
 
                     <div class="btn gesture-btn" id="Scissor">
-                        <img class='gesture-img' src="gestures/scissor.png" alt="">
+                        <img class='gesture-img' src="gestures/Scissor.png" alt="">
                     </div>
                     
                 </div>
