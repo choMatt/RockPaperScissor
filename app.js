@@ -6,13 +6,13 @@ const computerScore = 0;
 
 
 // * 3D Buttons animation
-for (let btns of allBtns){
-    btns.addEventListener('click', (e) => {
-        const btnClass = btns.classList
-        btnClass.add('btn-clicked');
-        setTimeout(() => btnClass.remove('btn-clicked'), 100)
-   })
-}
+// for (let btns of allBtns){
+//     btns.addEventListener('click', (e) => {
+        
+//    })
+// }
+
+
 
 
 // * Win, Lose, Tie logic
@@ -32,10 +32,16 @@ function tie(){
 function gameMechanics(){
   
     allBtns.forEach((btn) => {
+        
         btn.addEventListener('click', (e) => {
             
+            const btnClass = btn.classList
+            btnClass.add('btn-clicked');
+            setTimeout(() => btnClass.remove('btn-clicked'), 100)
+            
+            
             // * Computer Gesture Logic: 
-            const computer = ['Rock', 'Paper', 'Scissor'];
+            const computer = ['Scissor', 'Rock', 'Paper'];
             const randNum = Math.floor(Math.random() * computer.length);
             const computerGesture = computer[randNum];
 
@@ -56,6 +62,8 @@ function gameMechanics(){
             } else if (playerGesture == 'Scissor' && computerGesture == 'Rock'){
                 lose()
             };
+
+            
         })
     })
     

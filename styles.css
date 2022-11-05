@@ -83,6 +83,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .gesture-btn-edge{
@@ -91,8 +92,9 @@ body{
 
 .gesture-img{
     z-index: 0;
-    width: 130px;
+    width: 115px;
     user-select: none;
+    pointer-events: none; /* -note: this syntax stopped the image from blocking my click event */
 }
 
 /** Menu buttons box */
