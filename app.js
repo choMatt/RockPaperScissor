@@ -4,17 +4,6 @@ const images = document.querySelectorAll('.gesture-img')
 const playerScore = 0;
 const computerScore = 0;
 
-
-// * 3D Buttons animation
-// for (let btns of allBtns){
-//     btns.addEventListener('click', (e) => {
-        
-//    })
-// }
-
-
-
-
 // * Win, Lose, Tie logic
 function win(){
     display.innerHTML = 'You Win'
@@ -28,19 +17,18 @@ function tie(){
     display.innerHTML = 'Tie'
 }
 
-
 function gameMechanics(){
   
     allBtns.forEach((btn) => {
         
         btn.addEventListener('click', (e) => {
-            
+            // * 3D Button animation
             const btnClass = btn.classList
             btnClass.add('btn-clicked');
             setTimeout(() => btnClass.remove('btn-clicked'), 100)
+
             
-            
-            // * Computer Gesture Logic: 
+            // *  Computer Gesture Logic: 
             const computer = ['Scissor', 'Rock', 'Paper'];
             const randNum = Math.floor(Math.random() * computer.length);
             const computerGesture = computer[randNum];
