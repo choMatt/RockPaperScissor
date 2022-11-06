@@ -49,9 +49,6 @@ body{
 .menu-container{
     width: 14em;
     position: relative;
-    display: flex;
-    justify-content: end;
- 
 }
 
 .gestures-container{
@@ -79,6 +76,32 @@ body{
 .player-display{
     font-size: 1.6em;
 
+}
+
+/** Scoring panel*/
+
+.score-list{
+    height: 100%;
+    margin-left:12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:15px;
+    font-size:1.4em;
+    text-transform: uppercase;
+}
+
+.score-heading{
+    font-weight: 900;
+}
+
+.score-list li{
+    width: 80%;
+    float: left;
+}
+
+.right{
+    float:right;
 }
 
 /** Gesture buttons box  */

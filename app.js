@@ -2,8 +2,10 @@ const allBtns = document.querySelectorAll('.btn')
 const display = document.querySelector('.text-display')
 const images = document.querySelectorAll('.gesture-img')
 const gestureDisplay = document.querySelectorAll('.gesture-display')
-const playerScore = 0;
-const computerScore = 0;
+const score = document.querySelectorAll('.score')
+let playerScore = 0;
+let computerScore = 0;
+
 
 function computer(){
     const gestureArr = ['Scissor', 'Rock', 'Paper'];
@@ -18,59 +20,67 @@ function player(e){
 }
 
 function imageDisplay(computer, player){
-    const cGestureDisplay = computer
-    const pGestureDisplay = player
-    const cDisplay = gestureDisplay[1].setAttribute('src', `gestures/${cGestureDisplay}.png`)
-    const pDisplay = gestureDisplay[0].setAttribute('src', `gestures/${pGestureDisplay}.png`)
+    const pDisplay = gestureDisplay[0]
+    const cDisplay = gestureDisplay[1]
+    pDisplay.setAttribute('src', `gestures/${player}.png`)
+    cDisplay.setAttribute('src', `gestures/${computer}.png`)
 }
 
-
-function gameMechanics(){
-    allBtns.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            // * 3D Button animation
-            const btnClass = btn.classList
-            btnClass.add('btn-clicked');
-            setTimeout(() => btnClass.remove('btn-clicked'), 100)
-
-            const computerGesture = computer()
-            const playerGesture = player(e)
-            imageDisplay(computerGesture, playerGesture)
-            if (playerGesture == computerGesture){
-                tie()
-            } else if (playerGesture == 'Rock' && computerGesture == 'Scissor'){
-                win()
-            } else if (playerGesture == 'Rock' && computerGesture == 'Paper'){
-                lose()
-            } else if (playerGesture == 'Paper' && computerGesture == 'Rock'){
-                win()
-            } else if (playerGesture == 'Paper' && computerGesture == 'Scissor'){
-                lose()
-            } else if (playerGesture == 'Scissor' && computerGesture == 'Paper'){
-                win()
-            } else if (playerGesture == 'Scissor' && computerGesture == 'Rock'){
-                lose()
-            };
-        })
-    })
-    
-
+function gameMechanics(computer, player){
+    if (player == computer){
+        return tie()
+    } else if (player == 'Rock' && computer == 'Scissor'){
+        return win()
+    } else if (player == 'Rock' && computer == 'Paper'){
+        return lose()
+    } else if (player == 'Paper' && computer == 'Rock'){
+        return win()
+    } else if (player == 'Paper' && computer == 'Scissor'){
+        return lose()
+    } else if (player == 'Scissor' && computer == 'Paper'){
+        return win()
+    } else if (player == 'Scissor' && computer == 'Rock'){
+        return lose()
+    };
 }
 
+function btnAnimation(btn){
+    const btnClass = btn.classList
+    btnClass.add('btn-clicked');
+    setTimeout(() => btnClass.remove('btn-clicked'), 100)
+}
 
 // * Win, Lose, Tie logic
 function win(){
     display.innerHTML = 'You Win'
+    playerScore++
+    score[0].innerText = playerScore;
 }
 
 function lose(){
     display.innerHTML = 'You Lose'
+    computerScore++
+    score[1].innerText = computerScore;
 }
 
 function tie(){
     display.innerHTML = 'Tie'
 }
 
-gameMechanics()
 
+function game(){
+    allBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            const computerGesture = computer()
+            const playerGesture = player(e)
+            btnAnimation(btn)
+            imageDisplay(computerGesture, playerGesture)
+            gameMechanics(computerGesture, playerGesture)
+        })
+    })
+}
+
+
+
+game()
 
