@@ -22,8 +22,10 @@ function player(e){
 function imageDisplay(computer, player){
     const pDisplay = gestureDisplay[0]
     const cDisplay = gestureDisplay[1]
-    pDisplay.setAttribute('src', `gestures/${player}.png`)
-    cDisplay.setAttribute('src', `gestures/${computer}.png`)
+    const pImg = `gestures/${player}.png`
+    const cImg = `gestures/${computer}.png`
+    pDisplay.setAttribute('src', pImg)
+    cDisplay.setAttribute('src', cImg)
 }
 
 function gameMechanics(computer, player){
