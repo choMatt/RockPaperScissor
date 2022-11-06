@@ -1,13 +1,16 @@
 *{
     margin:0; padding:0;
-    box-sizing: border-box;;
+    box-sizing: border-box;
 }
 
 body{
-    width: inherit; height: inherit;
+    width: inherit; height: 100vh;
     font-family: 'Quicksand', sans-serif;
 }
 
+ul{
+    list-style: none;
+}
 /** Panels */
 
 .stage-panel{
@@ -82,7 +85,7 @@ body{
 
 .score-list{
     height: 100%;
-    margin-left:12px;
+    margin-left:20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -154,7 +157,6 @@ body{
 
 .menu-box-front,
 .menu-box-back{
-
     display: flex;
     flex-direction: column;
     gap: 1.4em;
@@ -173,12 +175,20 @@ body{
 .menu-btn-edge{
     width: 9em; height: 3em;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu-btn{
     background-color:#FFBABA ;
     z-index: 1;
     transition: transform 50ms ease-in-out;
+}
+
+.menu-btn > span{
+    font-size: 1.5em;
+    pointer-events: none;
 }
 
 .menu-btn-edge{

@@ -20,30 +20,35 @@ function player(e){
 }
 
 function imageDisplay(computer, player){
-    const pDisplay = gestureDisplay[0]
-    const cDisplay = gestureDisplay[1]
-    const pImg = `gestures/${player}.png`
-    const cImg = `gestures/${computer}.png`
-    pDisplay.setAttribute('src', pImg)
-    cDisplay.setAttribute('src', cImg)
+    const playerDisplay = gestureDisplay[0]
+    const computerDisplay = gestureDisplay[1]
+    const playerGesture = `gestures/${player}.png`
+    const computerGesture = `gestures/${computer}.png`
+        if (player == 'reset'){
+            playerDisplay.setAttribute('src', `gestures/Rock.png`)
+            computerDisplay.setAttribute('src', `gestures/Rock.png`)
+            playerScore = 0;
+            computerScore = 0;
+            display.innerHTML = 'Game Reset'
+            setTimeout(() => display.innerHTML = 'Press Start to Play', 1200)
+            score[0].innerText = playerScore;
+            score[1].innerText = computerScore;
+        } else if (player == 'start'){
+            game
+        } else  {
+            playerDisplay.setAttribute('src', playerGesture)
+            computerDisplay.setAttribute('src', computerGesture)
+        }
 }
 
 function gameMechanics(computer, player){
-    if (player == computer){
-        return tie()
-    } else if (player == 'Rock' && computer == 'Scissor'){
-        return win()
-    } else if (player == 'Rock' && computer == 'Paper'){
-        return lose()
-    } else if (player == 'Paper' && computer == 'Rock'){
-        return win()
-    } else if (player == 'Paper' && computer == 'Scissor'){
-        return lose()
-    } else if (player == 'Scissor' && computer == 'Paper'){
-        return win()
-    } else if (player == 'Scissor' && computer == 'Rock'){
-        return lose()
-    };
+    if (player == computer) tie()
+    else if (player == 'Rock' && computer == 'Scissor') win()
+    else if (player == 'Rock' && computer == 'Paper') lose()
+    else if (player == 'Paper' && computer == 'Rock') win()
+    else if (player == 'Paper' && computer == 'Scissor') lose()
+    else if (player == 'Scissor' && computer == 'Paper') win()
+    else if (player == 'Scissor' && computer == 'Rock') lose()
 }
 
 function btnAnimation(btn){
@@ -69,7 +74,6 @@ function tie(){
     display.innerHTML = 'Tie'
 }
 
-
 function game(){
     allBtns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
@@ -83,6 +87,4 @@ function game(){
 }
 
 
-
 game()
-
