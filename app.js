@@ -1,8 +1,9 @@
-const allBtns = document.querySelectorAll('.btn')
+const gestureBtns = document.querySelectorAll('.gesture-btn')
+const menuBtns = document.querySelectorAll('.menu-btn')
 const display = document.querySelector('.text-display')
 const images = document.querySelectorAll('.gesture-img')
 const gestureDisplay = document.querySelectorAll('.gesture-display')
-const score = document.querySelectorAll('.score')
+const scores = document.querySelectorAll('.score')
 let playerScore = 0;
 let computerScore = 0;
 
@@ -24,21 +25,17 @@ function imageDisplay(computer, player){
     const computerDisplay = gestureDisplay[1]
     const playerGesture = `gestures/${player}.png`
     const computerGesture = `gestures/${computer}.png`
-        if (player == 'reset'){
-            playerDisplay.setAttribute('src', `gestures/Rock.png`)
-            computerDisplay.setAttribute('src', `gestures/Rock.png`)
-            playerScore = 0;
-            computerScore = 0;
-            display.innerHTML = 'Game Reset'
-            setTimeout(() => display.innerHTML = 'Press Start to Play', 1200)
-            score[0].innerText = playerScore;
-            score[1].innerText = computerScore;
-        } else if (player == 'start'){
-            game
-        } else  {
-            playerDisplay.setAttribute('src', playerGesture)
-            computerDisplay.setAttribute('src', computerGesture)
-        }
+    playerDisplay.setAttribute('src', playerGesture)
+    computerDisplay.setAttribute('src', computerGesture)
+}
+
+function reset(){
+    playerScore = 0;
+    computerScore = 0;
+    display.innerText = 'Game Reset';
+    setTimeout(() => display.innerText = 'Press Start to Play', 1000)
+    gestureDisplay.forEach(display => display.src = 'gestures/Rock.png')
+    scores.forEach((score) => score.innerText = 0 )
 }
 
 function gameMechanics(computer, player){
@@ -59,23 +56,40 @@ function btnAnimation(btn){
 
 // * Win, Lose, Tie logic
 function win(){
-    display.innerHTML = 'You Win'
+    display.innerText = 'You Win'
     playerScore++
-    score[0].innerText = playerScore;
+    scores[0].innerText = playerScore;
 }
 
 function lose(){
-    display.innerHTML = 'You Lose'
+    display.innerText = 'You Lose'
     computerScore++
-    score[1].innerText = computerScore;
+    scores[1].innerText = computerScore;
 }
 
 function tie(){
     display.innerHTML = 'Tie'
 }
 
-function game(){
-    allBtns.forEach((btn) => {
+menuBtns.forEach((btn) =>{
+    btn.addEventListener('click', (e) => {
+        const pMenuTarget = e.target.id
+        btnAnimation(btn)
+        if (pMenuTarget == 'reset'){
+            reset()
+            return;
+        } else if (pMenuTarget == 'start'){
+                setTimeout(() => display.innerText = 'Rock', 1000)
+                setTimeout(() => display.innerText = 'Paper', 2000)
+                setTimeout(() => display.innerText = 'Scissor', 4000)
+                setTimeout(() => display.innerText = 'Shoot', 800)
+                start()
+        }
+    })
+})
+
+function gameStart(){
+    gestureBtns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
             const computerGesture = computer()
             const playerGesture = player(e)
@@ -86,5 +100,7 @@ function game(){
     })
 }
 
-
-game()
+function start(){
+    const fight = gameStart()
+    return fight
+}
