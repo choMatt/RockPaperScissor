@@ -3,104 +3,118 @@ const menuBtns = document.querySelectorAll('.menu-btn')
 const display = document.querySelector('.text-display')
 const images = document.querySelectorAll('.gesture-img')
 const gestureDisplay = document.querySelectorAll('.gesture-display')
-const scores = document.querySelectorAll('.score')
-let playerScore = 0;
-let computerScore = 0;
+const p1Display = document.querySelector('#p1Display')
+const p2Display = document.querySelector('#p2Display')
 
+let isGameActive = true;
+let winningScore = 10;
+let p1Score = 0;
+let p2Score = 0;
 
-function computer(){
-    const gestureArr = ['Scissor', 'Rock', 'Paper'];
-    const randNum = Math.floor(Math.random() * gestureArr.length);
-    const cGesture = gestureArr[randNum];
-    return cGesture
+gestureBtns.forEach((btn) => btn.classList.add('btn-disabled'))
+
+function playerOne(e){
+    const playerGesture = e.target.id
+    return playerGesture
 }
 
-function player(e){
-    const pGesture = e.target.id
-    return pGesture
+function playerTwo(){
+    const arr =['Rock', 'Paper', 'Scissor']
+    const randNum = Math.floor(Math.random() * arr.length)
+    const computerGesture = arr[randNum]
+    return computerGesture
 }
 
-function imageDisplay(computer, player){
-    const playerDisplay = gestureDisplay[0]
-    const computerDisplay = gestureDisplay[1]
-    const playerGesture = `gestures/${player}.png`
-    const computerGesture = `gestures/${computer}.png`
-    playerDisplay.setAttribute('src', playerGesture)
-    computerDisplay.setAttribute('src', computerGesture)
-}
-
-function reset(){
-    playerScore = 0;
-    computerScore = 0;
-    display.innerText = 'Game Reset';
-    setTimeout(() => display.innerText = 'Press Start to Play', 1000)
-    gestureDisplay.forEach(display => display.src = 'gestures/Rock.png')
-    scores.forEach((score) => score.innerText = 0 )
-}
-
-function gameMechanics(computer, player){
-    if (player == computer) tie()
-    else if (player == 'Rock' && computer == 'Scissor') win()
-    else if (player == 'Rock' && computer == 'Paper') lose()
-    else if (player == 'Paper' && computer == 'Rock') win()
-    else if (player == 'Paper' && computer == 'Scissor') lose()
-    else if (player == 'Scissor' && computer == 'Paper') win()
-    else if (player == 'Scissor' && computer == 'Rock') lose()
-}
-
-function btnAnimation(btn){
-    const btnClass = btn.classList
-    btnClass.add('btn-clicked');
-    setTimeout(() => btnClass.remove('btn-clicked'), 100)
-}
-
-// * Win, Lose, Tie logic
 function win(){
-    display.innerText = 'You Win'
-    playerScore++
-    scores[0].innerText = playerScore;
+    p1Score += 1
+    p1Display.textContent = p1Score
+    display.textContent = 'You Win'
 }
 
 function lose(){
-    display.innerText = 'You Lose'
-    computerScore++
-    scores[1].innerText = computerScore;
+    p2Score += 1
+    p2Display.textContent = p2Score
+    display.textContent = 'You Lose'
 }
 
 function tie(){
-    display.innerHTML = 'Tie'
+    display.textContent = 'TIE'
 }
 
-menuBtns.forEach((btn) =>{
+function start(){
+    
+}
+
+function reset(){
+    p1Score = 0;
+    p2Score = 0;
+    p1Display.textContent = p1Score
+    p2Display.textContent = p2Score
+    display.textContent = 'Game Reset'
+    setTimeout(() => display.textContent = 'Press Start to Play', 1000)
+}
+
+function game(player1, player2 ){
+    if (player1 === player2) tie()
+    else if (player1 == 'Rock' && player2 == 'Scissor') win()
+    else if (player1 == 'Rock' && player2 == 'Paper') lose()
+    else if (player1 == 'Paper' && player2 == 'Rock') win()
+    else if (player1 == 'Paper' && player2 == 'Scissor') lose()
+    else if (player1 == 'Scissor' && player2 == 'Paper') win()
+    else if (player1 == 'Scissor' && player2 == 'Rock') lose()
+}
+
+function btnAnimation(btn){
+    btn.classList.add('btn-clicked')
+    setTimeout(() => btn.classList.remove('btn-clicked'), 100)
+}
+
+menuBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-        const pMenuTarget = e.target.id
+        let playerInput = e.target.id
         btnAnimation(btn)
-        if (pMenuTarget == 'reset'){
+        if (playerInput == 'start'){
+            gestureBtns.forEach((btn) => {
+                btn.classList.remove('btn-disabled')
+                p1Score = 0;
+                p2Score = 0;
+                p1Display.textContent = p1Score
+                p2Display.textContent = p2Score
+                display.textContent = 'Game Start'
+                isGameActive = true;
+            })
+        } else if (playerInput == 'reset') {
+            gestureBtns.forEach((btn) => {
+                btn.classList.add('btn-disabled')
+            })
             reset()
-            return;
-        } else if (pMenuTarget == 'start'){
-                setTimeout(() => display.innerText = 'Rock', 1000)
-                setTimeout(() => display.innerText = 'Paper', 2000)
-                setTimeout(() => display.innerText = 'Scissor', 4000)
-                setTimeout(() => display.innerText = 'Shoot', 800)
-                start()
         }
     })
 })
 
-function gameStart(){
-    gestureBtns.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            const computerGesture = computer()
-            const playerGesture = player(e)
-            btnAnimation(btn)
-            imageDisplay(computerGesture, playerGesture)
-            gameMechanics(computerGesture, playerGesture)
-        })
+gestureBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        const computer = playerTwo()
+        const player = playerOne(e)
+        btnAnimation(btn)
+        if (isGameActive){
+            game(player, computer)
+            if (p1Score == winningScore){
+                isGameActive = false
+                display.textContent = 'Player 1 Wins'
+                gestureBtns.forEach((btn) => {
+                    btn.classList.add('btn-disabled')
+                })
+            } else if (p2Score == winningScore){
+                isGameActive = false
+                display.textContent = 'Player 2 Wins'
+                gestureBtns.forEach((btn) => {
+                    btn.classList.add('btn-disabled')
+                })
+            }
+        } 
     })
-}
+})
 
-function start(){
-    const fight = gameStart()
-    return fight
-}
+
+

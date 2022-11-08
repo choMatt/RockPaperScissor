@@ -185,6 +185,7 @@ ul{
     background-color:#FFBABA ;
     z-index: 1;
     transition: transform 50ms ease-in-out;
+    cursor: pointer;
 }
 
 .menu-btn > span{
@@ -198,6 +199,12 @@ ul{
 
 
 .btn-clicked{
+    transform: translateY(7px);
+    transition: transform 50ms ease-in-out;
+}
+
+.btn-disabled{
+    pointer-events: none;
     transform: translateY(7px);
     transition: transform 50ms ease-in-out;
 }
