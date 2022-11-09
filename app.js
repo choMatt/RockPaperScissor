@@ -5,13 +5,10 @@ const images = document.querySelectorAll('.gesture-img')
 const gestureDisplay = document.querySelectorAll('.gesture-display')
 const p1Display = document.querySelector('#p1Display')
 const p2Display = document.querySelector('#p2Display')
-
 let isGameActive = true;
-let winningScore = 10;
+let winningScore = 5;
 let p1Score = 0;
 let p2Score = 0;
-
-gestureBtns.forEach((btn) => btn.classList.add('btn-disabled'))
 
 function playerOne(e){
     const playerGesture = e.target.id
@@ -29,20 +26,40 @@ function win(){
     p1Score += 1
     p1Display.textContent = p1Score
     display.textContent = 'You Win'
+    p1Score != winningScore && countDown()
+    gestureBtns.forEach((btn) => {
+        btn.classList.add('btn-disabled')
+    }) 
 }
 
 function lose(){
     p2Score += 1
     p2Display.textContent = p2Score
     display.textContent = 'You Lose'
+    p2Score != winningScore && countDown()
+    gestureBtns.forEach((btn) => {
+        btn.classList.add('btn-disabled')
+    }) 
 }
 
 function tie(){
     display.textContent = 'TIE'
+    countDown()
+    gestureBtns.forEach((btn) => {
+        btn.classList.add('btn-disabled')
+    }) 
 }
 
-function start(){
-    
+function countDown(){
+    setTimeout(() => display.textContent = 'Rock', 1000)
+    setTimeout(() => display.textContent = 'Paper', 1400)
+    setTimeout(() => display.textContent = 'Scissor', 1800)
+    setTimeout(() => display.textContent = 'Shoot', 2200)
+    setTimeout(() => { 
+        gestureBtns.forEach((btn) => {
+            btn.classList.remove('btn-disabled')
+        }) 
+    },2300)
 }
 
 function reset(){
@@ -53,6 +70,18 @@ function reset(){
     display.textContent = 'Game Reset'
     menuBtns[0].classList.remove('btn-disabled')
     setTimeout(() => display.textContent = 'Press Start to Play', 1000)
+    gestureDisplay[0].setAttribute('src', `gestures/Rock.png`)
+    gestureDisplay[1].setAttribute('src', `gestures/Rock.png`)
+}
+
+function imgDisplay(player1, player2){
+    const p1GestureImg = player1;
+    const p2GestureImg = player2;
+    const p1GestureDisplay = gestureDisplay[0]
+    const p2GestureDisplay = gestureDisplay[1]
+    p1GestureDisplay.setAttribute('src', `gestures/${p1GestureImg}.png`)
+    p2GestureDisplay.setAttribute('src', `gestures/${p2GestureImg}.png`)
+
 }
 
 function game(player1, player2 ){
@@ -70,21 +99,21 @@ function btnAnimation(btn){
     setTimeout(() => btn.classList.remove('btn-clicked'), 100)
 }
 
+gestureBtns.forEach((btn) => btn.classList.add('btn-disabled'))
+
 menuBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         let playerInput = e.target.id
         btnAnimation(btn)
         if (playerInput == 'start'){
+            countDown()
             menuBtns[0].classList.add('btn-disabled')
-            gestureBtns.forEach((btn) => {
-                btn.classList.remove('btn-disabled')
-                p1Score = 0;
-                p2Score = 0;
-                p1Display.textContent = p1Score
-                p2Display.textContent = p2Score
-                display.textContent = 'Game Start'
-                isGameActive = true;
-            })
+            isGameActive = true;
+            display.textContent = 'Game Start'
+            p1Score = 0;
+            p2Score = 0;
+            p1Display.textContent = p1Score
+            p2Display.textContent = p2Score
         } else if (playerInput == 'reset') {
             gestureBtns.forEach((btn) => {
                 btn.classList.add('btn-disabled')
@@ -98,24 +127,27 @@ gestureBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         const computer = playerTwo()
         const player = playerOne(e)
+        imgDisplay(player, computer)
         btnAnimation(btn)
         if (isGameActive){
+            console.log(isGameActive)
             game(player, computer)
             if (p1Score == winningScore){
-                isGameActive = false
+                isGameActive = false;
                 display.textContent = 'Player 1 Wins'
                 gestureBtns.forEach((btn) => {
                     btn.classList.add('btn-disabled')
                 })
                 menuBtns[0].classList.remove('btn-disabled')
             } else if (p2Score == winningScore){
-                isGameActive = false
+                isGameActive = false;
                 display.textContent = 'Player 2 Wins'
                 gestureBtns.forEach((btn) => {
                     btn.classList.add('btn-disabled')
                 })
                 menuBtns[0].classList.remove('btn-disabled')
             }
+            
         } 
     })
 })
