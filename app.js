@@ -51,6 +51,7 @@ function reset(){
     p1Display.textContent = p1Score
     p2Display.textContent = p2Score
     display.textContent = 'Game Reset'
+    menuBtns[0].classList.remove('btn-disabled')
     setTimeout(() => display.textContent = 'Press Start to Play', 1000)
 }
 
@@ -74,6 +75,7 @@ menuBtns.forEach((btn) => {
         let playerInput = e.target.id
         btnAnimation(btn)
         if (playerInput == 'start'){
+            menuBtns[0].classList.add('btn-disabled')
             gestureBtns.forEach((btn) => {
                 btn.classList.remove('btn-disabled')
                 p1Score = 0;
@@ -105,12 +107,14 @@ gestureBtns.forEach((btn) => {
                 gestureBtns.forEach((btn) => {
                     btn.classList.add('btn-disabled')
                 })
+                menuBtns[0].classList.remove('btn-disabled')
             } else if (p2Score == winningScore){
                 isGameActive = false
                 display.textContent = 'Player 2 Wins'
                 gestureBtns.forEach((btn) => {
                     btn.classList.add('btn-disabled')
                 })
+                menuBtns[0].classList.remove('btn-disabled')
             }
         } 
     })
