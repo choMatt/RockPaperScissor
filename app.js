@@ -6,7 +6,7 @@ const gestureDisplay = document.querySelectorAll('.gesture-display')
 const p1Display = document.querySelector('#p1Display')
 const p2Display = document.querySelector('#p2Display')
 let isGameActive = true;
-let winningScore = 5;
+let winningScore = 3;
 let p1Score = 0;
 let p2Score = 0;
 
@@ -51,15 +51,19 @@ function tie(){
 }
 
 function countDown(){
-    setTimeout(() => display.textContent = 'Rock', 1000)
-    setTimeout(() => display.textContent = 'Paper', 1400)
-    setTimeout(() => display.textContent = 'Scissor', 1800)
-    setTimeout(() => display.textContent = 'Shoot', 2200)
-    setTimeout(() => { 
-        gestureBtns.forEach((btn) => {
-            btn.classList.remove('btn-disabled')
-        }) 
-    },2300)
+    const roshambo = (gesture, delay) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                display.textContent = gesture
+                resolve()
+            }, delay)
+        })
+    }
+    roshambo('Rock', 300)
+        .then(() => roshambo('Paper', 300))
+        .then(() => roshambo('Scissor', 300))
+        .then(() => roshambo('Shoot', 300))
+        .then(() => gestureBtns.forEach(btn => btn.classList.remove('btn-disabled')))
 }
 
 function reset(){
@@ -151,6 +155,3 @@ gestureBtns.forEach((btn) => {
         } 
     })
 })
-
-
-

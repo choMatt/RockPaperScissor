@@ -6,6 +6,7 @@
 body{
     width: inherit; height: 100vh;
     font-family: 'Quicksand', sans-serif;
+    back
 }
 
 ul{
@@ -40,9 +41,14 @@ ul{
 
 }
 
+
 .player-container,
 .computer-container{
     gap: 2em;
+}
+
+.gesture-display{
+    transform: rotate(29);
 }
 
 
