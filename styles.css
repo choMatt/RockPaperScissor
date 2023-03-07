@@ -42,7 +42,7 @@ ul{
 .player-container,
 .display-container,
 .computer-container{
-    width: 100em;height: 40em; 
+    width: 100em;height: 30em; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,11 +50,25 @@ ul{
 
 }
 
-.player-container,
+.player-container, 
 .computer-container{
     gap: 2em;
+    animation: slide-in 500ms ease-in-out infinite;
 }
 
+
+@keyframes slide-in {
+    100% {
+        transform: translate(0px, 0px);
+
+
+    }
+    50%{
+        transform: translate(0px, -40px);
+
+
+    }
+}
 
 /** Controls-Containers */
 
@@ -84,11 +98,12 @@ ul{
     width: 13em;
     user-select: none;
 
+    
 }
 
 .player-display{
     font-size: 1.6em;
-
+        
 }
 
 .gesture-display{
@@ -100,9 +115,12 @@ ul{
 .computer-container > .gesture-display{
     transform: rotate(-90deg) scaleY(-1) ;
     -webkit-transform: rotate(90deg) scaleY(-1) ;
-    -moz-transform: rotate(90deg) scaleY(-1) ;
+    -moz-transform: rotate(90deg) scaleY(-1) ;;
 }
 
+@keyframes up-to-down{
+
+}
 
 /** Scoring panel*/
 

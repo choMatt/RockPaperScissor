@@ -5,11 +5,22 @@ const images = document.querySelectorAll(".gesture-img");
 const gestureDisplay = document.querySelectorAll(".gesture-display");
 const p1Display = document.querySelector("#p1Display");
 const p2Display = document.querySelector("#p2Display");
+const pContainer = document.querySelector(".player-container")
+const cContainer = document.querySelector(".computer-container")
 let isGameActive = true;
 let winningScore = 3;
 let p1Score = 0;
 let p2Score = 0;
 let timeout;
+
+
+
+// function animateElement(){
+//   const element = document.querySelector('.gesture-animation')
+//   element.classList.add('animate')
+// }
+
+// animateElement()
 
 function playerOne(e) {
   const selectedOption = e.target.id;
