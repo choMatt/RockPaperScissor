@@ -6,9 +6,10 @@ const gestureDisplay = document.querySelectorAll(".gesture-display");
 const p1Display = document.querySelector("#p1Display");
 const p2Display = document.querySelector("#p2Display");
 let isGameActive = true;
-let winningScore = 3;
+let winningScore = 5;
 let p1Score = 0;
 let p2Score = 0;
+let timeout;
 
 function playerOne(e) {
   const selectedOption = e.target.id;
@@ -39,14 +40,6 @@ function winOrLose(isPlayer1Winner){
   }
 }
 
-function win() {
- winOrLose(true)
-}
-
-function lose() {
- winOrLose(false)
-}
-
 function tie() {
   display.textContent = "TIE";
   setTimeout(() => countDown(), 800 ) 
@@ -54,8 +47,6 @@ function tie() {
     btn.classList.add("btn-disabled");
   });
 }
-
-let timeout;
 
 function countDown() {
   gestureDisplay[0].setAttribute("src", `gestures/Rock.png`);
@@ -68,6 +59,7 @@ function countDown() {
       }, delay);
     });
   };
+
 
   async function executeTimers() {
     const waitTime = 400;
@@ -91,12 +83,12 @@ function imgDisplay(player1, player2) {
 
 function game(player1, player2) {
   if (player1 === player2) tie();
-  else if (player1 == "Rock" && player2 == "Scissor") win();
-  else if (player1 == "Rock" && player2 == "Paper") lose();
-  else if (player1 == "Paper" && player2 == "Rock") win();
-  else if (player1 == "Paper" && player2 == "Scissor") lose();
-  else if (player1 == "Scissor" && player2 == "Paper") win();
-  else if (player1 == "Scissor" && player2 == "Rock") lose();
+  else if (player1 == "Rock" && player2 == "Scissor") winOrLose(true);
+  else if (player1 == "Rock" && player2 == "Paper") winOrLose(false);
+  else if (player1 == "Paper" && player2 == "Rock") winOrLose(true);
+  else if (player1 == "Paper" && player2 == "Scissor") winOrLose(false);
+  else if (player1 == "Scissor" && player2 == "Paper") winOrLose(true);
+  else if (player1 == "Scissor" && player2 == "Rock") winOrLose(false);
 }
 
 function btnAnimation(btn) {
@@ -120,15 +112,17 @@ menuBtns.forEach((btn) => {
     }
 
     function reset(){
+      clearInterval(timeout);
       [p1Score, p2Score] = [0, 0];
       [p1Display.textContent, p2Display.textContent, display.textContent] = [0, 0, 'Game reset'];
       menuBtns[0].classList.add("btn-disabled");
       gestureDisplay.forEach(gd => gd.setAttribute("src", `gestures/Rock.png`));
+      gestureBtns.forEach(btn => btn.classList.add("btn-disabled"));
       setTimeout(() => {
         display.textContent = "Press Start to Play"
         menuBtns[0].classList.remove("btn-disabled");
       },1800)
-      clearInterval(timeout);
+      
     }
     
     playerInput == "start" ? start() : reset();
@@ -160,5 +154,3 @@ gestureBtns.forEach((btn) => {
     }
   });
 });
-
-
