@@ -15,12 +15,13 @@ let timeout;
 
 
 
-// function animateElement(){
-//   const element = document.querySelector('.gesture-animation')
-//   element.classList.add('animate')
-// }
-
-// animateElement()
+function animateElement(){
+  const containers = [pContainer, cContainer];
+  containers.forEach(container => container.classList.add("gesture-animation"))
+  setTimeout(() => {
+    containers.forEach(container => container.classList.remove("gesture-animation"))
+  }, 1140)
+}
 
 function playerOne(e) {
   const selectedOption = e.target.id;
@@ -40,7 +41,6 @@ function winOrLose(isPlayer1Winner){
   const gameResult = isPlayer1Winner ? "You Win" : "You lose"
   scoresDisplay.textContent = score;
   display.textContent = gameResult
-  score != winningScore && setTimeout(() => countDown(), 800 ) 
   gestureBtns.forEach(btn =>  btn.classList.add("btn-disabled"));
 
   if (score === winningScore){
@@ -53,37 +53,11 @@ function winOrLose(isPlayer1Winner){
 
 function tie() {
   display.textContent = "TIE";
-  setTimeout(() => countDown(), 800 ) 
   gestureBtns.forEach((btn) => {
     btn.classList.add("btn-disabled");
   });
 }
 
-function countDown() {
-  gestureDisplay[0].setAttribute("src", `gestures/Rock.png`);
-  gestureDisplay[1].setAttribute("src", `gestures/Rock.png`);
-  const executeGestureTimer  = (gesture, delay) => {
-    return new Promise((resolve) => {
-      timeout = setTimeout(() => {
-        display.textContent = gesture;
-        resolve();
-      }, delay);
-    });
-  };
-
-
-  async function executeTimers() {
-    const waitTime = 400;
-    const gestureDisplay = ["Rock", "Paper", "Scissor", "Shoot"]
-    for (const gesture of gestureDisplay) {
-      await executeGestureTimer(gesture, waitTime);
-    }
-    gestureBtns.forEach(btn => btn.classList.remove("btn-disabled"));
-  }
-
- 
-  executeTimers()
-}
 
 function imgDisplay(player1, player2) {
   [p1GestureImg, p2GestureImg] = [player1, player2];
@@ -107,8 +81,6 @@ function btnAnimation(btn) {
   setTimeout(() => btn.classList.remove("btn-clicked"), 100);
 }
 
-gestureBtns.forEach((btn) => btn.classList.add("btn-disabled"));
-
 menuBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let playerInput = e.target.id;
@@ -119,7 +91,7 @@ menuBtns.forEach((btn) => {
       [p1Display.textContent, p2Display.textContent] = [0, 0];
       menuBtns[0].classList.add("btn-disabled");
       isGameActive = true;
-      countDown();
+
     }
 
     function reset(){
@@ -141,28 +113,52 @@ menuBtns.forEach((btn) => {
   });
 });
 
+let computer;
+let player;
+
+
 gestureBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    const computer = playerTwo();
-    const player = playerOne(e);
-    imgDisplay(player, computer);
+     computer = playerTwo();
+     player = playerOne(e);
     btnAnimation(btn);
-    if (isGameActive) {
-      game(player, computer);
-      if (p1Score == winningScore) {
-        isGameActive = false;
-        gestureBtns.forEach((btn) => {
-          btn.classList.add("btn-disabled");
-        });
-        menuBtns[0].classList.remove("btn-disabled");
-      } else if (p2Score == winningScore) {
-        isGameActive = false;
-        gestureBtns.forEach((btn) => {
-          btn.classList.add("btn-disabled");
-        });
-        menuBtns[0].classList.remove("btn-disabled");
-      }
-    }
+    handleClick()
+
+
+    // if (isGameActive) {
+    //   game(player, computer);
+    //   if (p1Score == winningScore) {
+    //     isGameActive = false;
+    //     gestureBtns.forEach((btn) => {
+    //       btn.classList.add("btn-disabled");
+    //     });
+    //     menuBtns[0].classList.remove("btn-disabled");
+    //   } else if (p2Score == winningScore) {
+    //     isGameActive = false;
+    //     gestureBtns.forEach((btn) => {
+    //       btn.classList.add("btn-disabled");
+    //     });
+    //     menuBtns[0].classList.remove("btn-disabled");
+    //   }
+    // }
   });
 });
+
+function delay(playerClicked){
+  if (playerClicked){
+      animateElement()
+      setTimeout(() => {
+        imgDisplay(player, computer);
+      }, 900)
+  }
+}
+
+function handleClick(){
+  delay(true)
+}
+
+
+
+
+
 

@@ -53,7 +53,11 @@ ul{
 .player-container, 
 .computer-container{
     gap: 2em;
-    animation: slide-in 250ms ease-in-out normal;
+    
+}
+
+.gesture-animation{
+    animation: slide-in 300ms ease-in-out normal;
     animation-iteration-count: 3;
 }
 
@@ -61,13 +65,9 @@ ul{
 @keyframes slide-in {
     100% {
         transform: translate(0px, 0px);
-
-
     }
     50%{
         transform: translate(0px, -40px);
-
-
     }
 }
 
@@ -119,9 +119,6 @@ ul{
     -moz-transform: rotate(90deg) scaleY(-1) ;;
 }
 
-@keyframes up-to-down{
-
-}
 
 /** Scoring panel*/
 
