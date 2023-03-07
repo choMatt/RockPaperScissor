@@ -155,5 +155,3 @@ gestureBtns.forEach((btn) => {
   });
 });
 
-Hello
-
