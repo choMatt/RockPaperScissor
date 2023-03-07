@@ -122,7 +122,7 @@ gestureBtns.forEach((btn) => {
      computer = playerTwo();
      player = playerOne(e);
     btnAnimation(btn);
-    handleClick()
+    delay()
 
 
     // if (isGameActive) {
@@ -144,18 +144,14 @@ gestureBtns.forEach((btn) => {
   });
 });
 
-function delay(playerClicked){
-  if (playerClicked){
+function delay(){
       animateElement()
       setTimeout(() => {
         imgDisplay(player, computer);
       }, 900)
-  }
 }
 
-function handleClick(){
-  delay(true)
-}
+
 
 
 
