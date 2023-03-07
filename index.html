@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <title>Rock, Paper, Scissor Game</title>
+</head>
+<body>
+    <main class="main-window">
+        <section class="stage-panel">
+
+            <div class="player-container">
+                <span class="player-display">YOU</span>
+                <img class="gesture-display" src="gestures/Rock.png" >
+            </div>
+            
+            <div class="display-container">
+                <span class="text-display">Press Start to Play</span>
+            </div>
+            
+            <div class="computer-container">
+                <span class="player-display">COMPUTER</span>
+                <img class="gesture-display" src="gestures/Rock.png" >
+            </div>
+
+        </section>
+ 
+        <section class="control-panel">
+
+            <div class="scoring-container">
+                <ul class="score-list">
+                    <h3 class="score-heading">Score</h3>
+                    <li>You<span class="right" id="p1Display">0</span></li>
+                    <li>Computer<span class="right" id="p2Display">0</span></li>
+                </ul>
+            </div>
+
+            <div class="gestures-container">
+                <div class="gesture-box-front">
+
+                    <div class="btn gesture-btn" id="Rock">
+                        <img class='gesture-img' src="gestures/Rock.png" alt="">
+                    </div>
+
+                    <div class="btn gesture-btn" id="Paper">
+                        <img class='gesture-img' src="gestures/Paper.png" alt="">
+                    </div>
+
+                    <div class="btn gesture-btn" id="Scissor">
+                        <img class='gesture-img' src="gestures/Scissor.png" alt="">
+                    </div>
+                    
+                </div>
+                <div class="gesture-box-back">
+                    <div class="gesture-btn-edge"></div>
+                    <div class="gesture-btn-edge"></div>
+                    <div class="gesture-btn-edge"></div>
+                </div>
+            </div>
+
+            <div class="menu-container">
+                <div class="menu-box-front">
+                    <div class="menu-btn" id="start"><span>Start</span></div>
+                    <div class="menu-btn" id="reset"><span>Reset</span></div>
+                </div>
+                <div class="menu-box-back">
+                    <div class="menu-btn-edge"></div>
+                    <div class="menu-btn-edge"></div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+*{
+    margin:0; padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    width: inherit; height: 100vh;
+    font-family: 'Quicksand', sans-serif;
+}
+
+ul{
+    list-style: none;
+}
+/** Panels */
+
+.stage-panel{
+    height: 44em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}   
+
+.control-panel{
+    height: 15.46em;
+    display: flex;
+    justify-content: space-between;
+    background-color: #D34E4E;
+}
+
+/** Stage-Containers */
+
+.player-container,
+.display-container,
+.computer-container{
+    width: 100%;height: 40em; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.player-container,
+.computer-container{
+    gap: 2em;
+}
+
+.gesture-display{
+    transform: rotate(29);
+}
+
+
+/** Controls-Containers */
+
+.scoring-container,
+.menu-container{
+    width: 14em;
+    position: relative;
+}
+
+.gestures-container{
+    width: 45em;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/** Display */
+
+.text-display{
+    font-size: 5vmin;
+}
+
+.gesture-display{
+    width: 25vmin;
+    user-select: none;
+
+}
+
+.player-display{
+    font-size: 1.6em;
+
+}
+
+/** Scoring panel*/
+
+.score-list{
+    height: 100%;
+    margin-left:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:15px;
+    font-size:1.4em;
+    text-transform: uppercase;
+}
+
+.score-heading{
+    font-weight: 900;
+}
+
+.score-list li{
+    width: 80%;
+    float: left;
+}
+
+.right{
+    float:right;
+}
+
+/** Gesture buttons box  */
+
+.gesture-box-front,
+.gesture-box-back{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    gap:4em;
+}
+
+
+.gesture-box-back{
+    transform: translateY(12px);
+}
+
+/** Gesture buttons*/
+
+.gesture-btn,
+.gesture-btn-edge{
+    width: 10em; height: 10em;
+    border-radius: 1em;
+}
+
+.gesture-btn{
+    background-color:#FFBABA ;
+    z-index:1;
+    transition: transform 50ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.gesture-btn-edge{
+    background-color: #ce7979;
+}
+
+.gesture-img{
+    z-index: 0;
+    width: 115px;
+    user-select: none;
+    pointer-events: none; /* -note: this syntax stopped the image from blocking my click event */
+}
+
+/** Menu buttons box */
+
+.menu-box-front,
+.menu-box-back{
+    display: flex;
+    flex-direction: column;
+    gap: 1.4em;
+    position: absolute;
+    bottom:2.6em;
+    right: 13px;
+}
+
+.menu-box-back{
+    transform: translateY(10px);
+}
+
+/** Menu buttons */
+
+.menu-btn,
+.menu-btn-edge{
+    width: 9em; height: 3em;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-btn{
+    background-color:#FFBABA ;
+    z-index: 1;
+    transition: transform 50ms ease-in-out;
+    cursor: pointer;
+}
+
+.menu-btn > span{
+    font-size: 1.5em;
+    pointer-events: none;
+}
+
+.menu-btn-edge{
+    background-color: #ce7979;
+}
+
+
+.btn-clicked{
+    transform: translateY(7px);
+    transition: transform 50ms ease-in-out;
+}
+
+.btn-disabled{
+    pointer-events: none;
+    transform: translateY(7px);
+    transition: transform 50ms ease-in-out;
+}
+
+
+
+
+
