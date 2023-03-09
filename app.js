@@ -113,9 +113,10 @@ menuBtns.forEach((btn) => {
   });
 });
 
+
+
 let computer;
 let player;
-
 
 gestureBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -123,22 +124,21 @@ gestureBtns.forEach((btn) => {
      player = playerOne(e);
     btnAnimation(btn);
     delay()
-
-
-    // if (isGameActive) {
-    //   game(player, computer);
+     if (isGameActive) {
+       game(player, computer);
+  }
     //   if (p1Score == winningScore) {
     //     isGameActive = false;
-    //     gestureBtns.forEach((btn) => {
-    //       btn.classList.add("btn-disabled");
-    //     });
-    //     menuBtns[0].classList.remove("btn-disabled");
+    //     // gestureBtns.forEach((btn) => {
+    //     //   btn.classList.add("btn-disabled");
+    //     // });
+    //     // menuBtns[0].classList.remove("btn-disabled");
     //   } else if (p2Score == winningScore) {
-    //     isGameActive = false;
-    //     gestureBtns.forEach((btn) => {
-    //       btn.classList.add("btn-disabled");
-    //     });
-    //     menuBtns[0].classList.remove("btn-disabled");
+    //    ]p isGameActive = false;
+    //     // gestureBtns.forEach((btn) => {
+    //     //   btn.classList.add("btn-disabled");
+    //     // });
+    //     // menuBtns[0].classList.remove("btn-disabled");
     //   }
     // }
   });
