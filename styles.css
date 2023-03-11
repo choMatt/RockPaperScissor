@@ -6,27 +6,21 @@
 body{
     width: inherit; height: 100vh;
     font-family: 'Quicksand', sans-serif;
-<<<<<<< HEAD
     display: flex;
     justify-content: center;
     overflow-y: hidden;
     background-color: bisque;
-=======
->>>>>>> e4e77bc2092a98bcad1633caacc96ce370fae9fc
 }
 
 ul{
     list-style: none;
 }
-<<<<<<< HEAD
 
 .main-window{
     width: 75em; height: 100vh;
     border: 6px solid black;
     background-color: white;
 }
-=======
->>>>>>> e4e77bc2092a98bcad1633caacc96ce370fae9fc
 /** Panels */
 
 .stage-panel{
@@ -48,11 +42,7 @@ ul{
 .player-container,
 .display-container,
 .computer-container{
-<<<<<<< HEAD
     width: 100em;height: 30em; 
-=======
-    width: 100%;height: 40em; 
->>>>>>> e4e77bc2092a98bcad1633caacc96ce370fae9fc
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -60,7 +50,6 @@ ul{
 
 }
 
-<<<<<<< HEAD
 .player-container, 
 .computer-container{
     gap: 2em;
@@ -82,19 +71,6 @@ ul{
     }
 }
 
-=======
-
-.player-container,
-.computer-container{
-    gap: 2em;
-}
-
-.gesture-display{
-    transform: rotate(29);
-}
-
-
->>>>>>> e4e77bc2092a98bcad1633caacc96ce370fae9fc
 /** Controls-Containers */
 
 .scoring-container,
@@ -116,7 +92,6 @@ ul{
 /** Display */
 
 .text-display{
-<<<<<<< HEAD
     font-size: 2em;
 }
 
@@ -125,20 +100,10 @@ ul{
     user-select: none;
 
     
-=======
-    font-size: 5vmin;
-}
-
-.gesture-display{
-    width: 25vmin;
-    user-select: none;
-
->>>>>>> e4e77bc2092a98bcad1633caacc96ce370fae9fc
 }
 
 .player-display{
     font-size: 1.6em;
-<<<<<<< HEAD
         
 }
 
@@ -155,11 +120,6 @@ ul{
 }
 
 
-=======
-
-}
-
->>>>>>> e4e77bc2092a98bcad1633caacc96ce370fae9fc
 /** Scoring panel*/
 
 .score-list{

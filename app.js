@@ -5,21 +5,27 @@ const images = document.querySelectorAll(".gesture-img");
 const gestureDisplay = document.querySelectorAll(".gesture-display");
 const p1Display = document.querySelector("#p1Display");
 const p2Display = document.querySelector("#p2Display");
-const pContainer = document.querySelector(".player-container")
-const cContainer = document.querySelector(".computer-container")
-let isGameActive = true;
+
 let winningScore = 3;
 let p1Score = 0;
 let p2Score = 0;
-let timeout;
+
+let player;
+let computer;
+
+
 
 
 //todo : add comments to clarify the code for other devs
-//todo : fix the tie function on line 115
 //todo : make the code more DRY
 
 
-function gameLoop() {
+function gestureReset(){
+  setTimeout(() => {
+    p1GestureDisplay.setAttribute("src", `gestures/Rock.png`);
+    p2GestureDisplay.setAttribute("src", `gestures/Rock.png`);
+  }, 1700);
+}
 
 function gestureButtonState(isButtonActive){
   if(isButtonActive){
@@ -31,9 +37,9 @@ function gestureButtonState(isButtonActive){
 
 function menuButtonState(isButtonActive){
   if(isButtonActive){
-
+    menuBtns[0].classList.remove("btn-disabled");
   } else {
-
+    menuBtns[0].classList.add("btn-disabled");
   }
 }
 
@@ -61,67 +67,135 @@ gestureButtonState(false)
   }
 
 
-//* This function takes two parameters, "player1" and "player2".
-//* this code determines who is the winner of the game
-function getWinner(player1, player2) {
-  if (player1 === player2) tie();
-  else if (player1 == "Rock" && player2 == "Scissor") winOrLose(true);
-  else if (player1 == "Rock" && player2 == "Paper") winOrLose(false);
-  else if (player1 == "Paper" && player2 == "Rock") winOrLose(true);
-  else if (player1 == "Paper" && player2 == "Scissor") winOrLose(false);
-  else if (player1 == "Scissor" && player2 == "Paper") winOrLose(true);
-  else if (player1 == "Scissor" && player2 == "Rock") winOrLose(false);
-}
+
+
+function gameLoop(){
 
   gestureBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       computer = playerTwo();
       player = playerOne(e);
       btnAnimation(btn);
-      gestureButtonState(false)
+      
       if (isGameActive) {
         getWinner(player, computer);
       }
+
+      //* this code determines who is the winner of the game
+      function getWinner(player1, player2) {
+        if (player1 === player2) timer("Tie");
+        else if (player1 == "Rock" && player2 == "Scissor") timer(true);
+        else if (player1 == "Rock" && player2 == "Paper") timer(false);
+        else if (player1 == "Paper" && player2 == "Rock") timer(true);
+        else if (player1 == "Paper" && player2 == "Scissor") timer(false);
+        else if (player1 == "Scissor" && player2 == "Paper") timer(true);
+        else if (player1 == "Scissor" && player2 == "Rock") timer(false);
+      }
+
+  
+
+      function isPlayer1Winner(state){
+        timeout = setTimeout(() => {
+          let score = state ? ++p1Score : ++p2Score;
+          let winLose = state ? "You Win" : "You lose";
+          let scoreBoard = state ? p1Display : p2Display;
+          display.textContent = winLose
+          scoreBoard.textContent = score
+          // gestureButtonState(true)
+
+          if (state == 'Tie'){
+            display.textContent = state
+          } 
+
+          if(score === winningScore){
+            let declareWinner = state ? "Player 1 Wins" : "Player 2 Wins"
+            display.textContent = declareWinner
+            menuButtonState(true)
+            gestureButtonState(false)
+          } else {
+            setTimeout(() => gestureButtonState(true) , 900) 
+          }
+        }, 800)
+
+     
+       
+      }
+
+      async function timer(state){
+        await animateElement() 
+        await isPlayer1Winner(state)
+        await gestureReset()
+      }
+    
+
+
+      // function winOrLose(isPlayer1Winner) {
+      //   let score = isPlayer1Winner ? ++p1Score : ++p2Score;
+      //     if(isPlayer1Winner == "Tie"){
+      //       timeout = setTimeout(() => {
+      //           display.textContent = "TIE"
+      //           imgDisplay(player, computer);
+      //           gestureReset()
+      //         }, 800)
+      //     } else {
+      //        timeout = setTimeout(() =>  {
+      //           let scoresDisplay = isPlayer1Winner ? p1Display : p2Display;
+      //           let gameStatus = isPlayer1Winner ? "You win" : "You Lose"
+      //           scoresDisplay.textContent = score;
+      //           display.textContent = gameStatus;
+      //           imgDisplay(player, computer);
+      //           gestureReset()
+      //         }, 800)
+
+      //         if (score === winningScore) {
+      //           winnerText = isPlayer1Winner ? 'Player 1 Wins' : 'Player 2 Wins';
+      //           isGameActive = false;
+      //           display.textContent = winnerText;
+      //           gestureButtonState(false)
+      //           menuButtonState(true)
+      //         } else {
+      //           setTimeout(() => gestureButtonState(true), 1200);
+      //         }
+      //     }
+          
+      // }
+
     });
   });
+}
+  
 
-//! Incorrect code sequence check line 115
-  function animateAndDisplay(isPlayer1Winner, resultText) {
-    animateElement();
-    timeout = setTimeout(() => {
-      let score = isPlayer1Winner ? ++p1Score : ++p2Score;
-      const scoresDisplay = isPlayer1Winner ? p1Display : p2Display;
-      scoresDisplay.textContent = score;
-      display.textContent = resultText;
-      imgDisplay(player, computer);
+menuBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    let playerInput = e.target.id;
+    btnAnimation(btn);
+
+    function start(){
+      [p1Score, p2Score] = [0, 0];
+      [p1Display.textContent, p2Display.textContent] = [0, 0];
+      isGameActive = true;
+      menuButtonState(false)
+      gestureButtonState(true)
+    }
+
+    function reset() {
+      [p1Score, p2Score] = [0, 0];
+      [p1Display.textContent, p2Display.textContent, display.textContent] = [0, 0, 'Game reset'];
+      gestureDisplay.forEach(gd => gd.setAttribute("src", `gestures/Rock.png`));
+      menuButtonState(false)
+      gestureButtonState(false)
       setTimeout(() => {
-        p1GestureDisplay.setAttribute("src", `gestures/Rock.png`);
-        p2GestureDisplay.setAttribute("src", `gestures/Rock.png`);
-      }, 1000);
+        display.textContent = "Press Start to Play"
+        menuButtonState(true)
+      },1800)
+      
+    }
+    
+    playerInput == "start" ? start() : reset();
 
-      if (score === winningScore) {
-        const winnerText = isPlayer1Winner ? 'Player 1 Wins' : 'Player 2 Wins';
-        isGameActive = false;
-        display.textContent = winnerText;
-        gestureButtonState(false)
-        menuBtns[0].classList.remove("btn-disabled");
-      } else {
-        setTimeout(() => {
-          gestureBtns.forEach(btn => btn.classList.remove("btn-disabled"));
-        }, 1000);
-      }
-    }, 680);
-  }
-
-  function winOrLose(isPlayer1Winner) {
-    const resultText = isPlayer1Winner ? "You Win" : "You lose";
-    animateAndDisplay(isPlayer1Winner, resultText);
-  }
-
-//! Bug - This still adds a score to the computer even a tie game
-  function tie() {
-    animateAndDisplay(false, "TIE");
-  }
+  });
+});
+ 
 
   function imgDisplay(player1, player2) {
     [p1GestureImg, p2GestureImg] = [player1, player2];
@@ -129,7 +203,7 @@ function getWinner(player1, player2) {
     p1GestureDisplay.setAttribute("src", `gestures/${p1GestureImg}.png`);
     p2GestureDisplay.setAttribute("src", `gestures/${p2GestureImg}.png`);
   }
-
+ 
 
 
   function btnAnimation(btn) {
@@ -137,54 +211,20 @@ function getWinner(player1, player2) {
     setTimeout(() => btn.classList.remove("btn-clicked"), 100);
   }
 
-  menuBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      let playerInput = e.target.id;
-      btnAnimation(btn);
-
-      function start(){
-        [p1Score, p2Score] = [0, 0];
-        [p1Display.textContent, p2Display.textContent] = [0, 0];
-        menuBtns[0].classList.add("btn-disabled");
-        isGameActive = true;
-        gestureButtonState(true)
-      }
-
-      function reset(){
-        clearInterval(timeout);
-        [p1Score, p2Score] = [0, 0];
-        [p1Display.textContent, p2Display.textContent, display.textContent] = [0, 0, 'Game reset'];
-        menuBtns[0].classList.add("btn-disabled");
-        gestureDisplay.forEach(gd => gd.setAttribute("src", `gestures/Rock.png`));
-        gestureButtonState(false)
-        setTimeout(() => {
-          display.textContent = "Press Start to Play"
-          menuBtns[0].classList.remove("btn-disabled");
-        },1800)
-        
-      }
-      
-      playerInput == "start" ? start() : reset();
-
-    });
-  });
-
-  // let computer;
-  // let player;
-
 
   function animateElement(){
+    const pContainer = document.querySelector(".player-container")
+    const cContainer = document.querySelector(".computer-container")
     const containers = [pContainer, cContainer];
     containers.forEach(container => container.classList.add("gesture-animation"))
-    setTimeout(() => {
+   timeout =  setTimeout(() => {
       containers.forEach(container => container.classList.remove("gesture-animation"))
-    }, 1100)
+      imgDisplay(player, computer)
+    }, 849)
+    gestureButtonState(false)
   }
 
-}
+
+
 
 gameLoop()
-
-
-
-
