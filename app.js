@@ -15,13 +15,16 @@ let p2Score = 0;
 //* This sets the gesture buttons to a disabled state.
 gestureButtonState(false);
 
+
+// ---------- PLAYERS  ----------
+
 // * Player 1 options.
 function playerOne(e) {
   const selectedOption = e.target.id;
   return selectedOption;
 }
 
-//* Player Two options.
+//* Player 2 options.
 function playerTwo() {
   const options = ["Rock", "Paper", "Scissor"];
   const randNum = Math.floor(Math.random() * options.length);
@@ -32,8 +35,8 @@ function playerTwo() {
 
 // ---------- GAME SEQUENCE/LOOP ----------
 
-//* Winner and the animation handler.
-async function handleGestureClick(e) {
+//* Winner and animation handler.
+async function runGameRound(e) {
   const player1 = playerOne(e);
   const player2 = playerTwo();
   const isPlayerwinner = getWinner(player1, player2);
@@ -84,21 +87,20 @@ function updateScoreBoard(isPlayerwinner) {
   }, 800);
 }
 
-gestureBtns.forEach((btn) => btn.addEventListener("click", handleGestureClick));
+gestureBtns.forEach((btn) => btn.addEventListener("click", runGameRound));
 
 
 
 // ---------- START AND RESET ----------
 
 // * Start and Reset function.
-function startReset(e) {
+function startOrReset(e) {
   const selectedMenu = e.target.id;
-  btnAnimation(e.target);
   [p1Score, p2Score] = [0, 0];
   [p1Display.textContent, p2Display.textContent] = [0, 0];
-
+  btnAnimation(e.target);
+  
   if (selectedMenu === "start") {
-    [p1Display.textContent, p2Display.textContent] = [0, 0];
     display.textContent = "Pick";
     menuButtonState(0, false);
     gestureButtonState(true);
@@ -113,7 +115,7 @@ function startReset(e) {
   }
 }
 
-menuBtns.forEach((btn) => btn.addEventListener("click", startReset));
+menuBtns.forEach((btn) => btn.addEventListener("click", startOrReset));
 
 
 
