@@ -5,187 +5,183 @@ const images = document.querySelectorAll(".gesture-img");
 const gestureDisplay = document.querySelectorAll(".gesture-display");
 const p1Display = document.querySelector("#p1Display");
 const p2Display = document.querySelector("#p2Display");
-const pContainer = document.querySelector(".player-container")
-const cContainer = document.querySelector(".computer-container")
-let isGameActive = true;
+
 let winningScore = 3;
 let p1Score = 0;
 let p2Score = 0;
-let timeout;
-
 
 //todo : add comments to clarify the code for other devs
-//todo : fix the tie function on line 115
-//todo : make the code more DRY
 
+//* This sets the gesture buttons to a disabled state.
+gestureButtonState(false);
 
-function gameLoop() {
-
-function gestureButtonState(isButtonActive){
-  if(isButtonActive){
-    gestureBtns.forEach(btn => btn.classList.remove("btn-disabled"));
-  } else {
-    gestureBtns.forEach(btn => btn.classList.add("btn-disabled"));
-  }
+// * Player 1 options.
+function playerOne(e) {
+  const selectedOption = e.target.id;
+  return selectedOption;
 }
 
-function menuButtonState(isButtonActive){
-  if(isButtonActive){
-
-  } else {
-
-  }
+//* Player Two options.
+function playerTwo() {
+  const options = ["Rock", "Paper", "Scissor"];
+  const randNum = Math.floor(Math.random() * options.length);
+  const computerGesture = options[randNum];
+  return computerGesture;
 }
 
-//* This sets the gesture buttons to a disabled state
-gestureButtonState(false)
 
- 
-// * Player 1 (You)
-// * Get the ID of the button that was clicked and assign it to a variable
-//* Return the selected option (rock, paper, or scissors)
-  function playerOne(e) {
-    const selectedOption = e.target.id;
-    return selectedOption;
-  }
+// ---------- GAME SEQUENCE/LOOP ----------
 
-//* Player2 (Computer)
-//* Generate a random number between 0 and the number of options
-//* Use the random number to select a gesture from the options array
-//* Return the selected gesture (rock, paper, or scissors)
-  function playerTwo() {
-    const options = ["Rock", "Paper", "Scissor"];
-    const randNum = Math.floor(Math.random() * options.length);
-    const computerGesture = options[randNum];
-    return computerGesture;
-  }
+//* Winner and the animation handler.
+async function handleGestureClick(e) {
+  const player1 = playerOne(e);
+  const player2 = playerTwo();
+  const isPlayerwinner = getWinner(player1, player2);
+  btnAnimation(e.target);
+  menuButtonState(1, false);
+  await animateElement();
+  await imgDisplay(player1, player2);
+  updateScoreBoard(isPlayerwinner);
+  await gestureReset();
+}
 
-
-//* This function takes two parameters, "player1" and "player2".
-//* this code determines who is the winner of the game
+//* Win and Lose function.
 function getWinner(player1, player2) {
-  if (player1 === player2) tie();
-  else if (player1 == "Rock" && player2 == "Scissor") winOrLose(true);
-  else if (player1 == "Rock" && player2 == "Paper") winOrLose(false);
-  else if (player1 == "Paper" && player2 == "Rock") winOrLose(true);
-  else if (player1 == "Paper" && player2 == "Scissor") winOrLose(false);
-  else if (player1 == "Scissor" && player2 == "Paper") winOrLose(true);
-  else if (player1 == "Scissor" && player2 == "Rock") winOrLose(false);
+  if (player1 == player2) return "TIE";
+  else if (player1 == "Rock" && player2 == "Scissor") return true;
+  else if (player1 == "Rock" && player2 == "Paper") return false;
+  else if (player1 == "Paper" && player2 == "Rock") return true;
+  else if (player1 == "Paper" && player2 == "Scissor") return false;
+  else if (player1 == "Scissor" && player2 == "Paper") return true;
+  else if (player1 == "Scissor" && player2 == "Rock") return false;
 }
 
-  gestureBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      computer = playerTwo();
-      player = playerOne(e);
-      btnAnimation(btn);
-      gestureButtonState(false)
-      if (isGameActive) {
-        getWinner(player, computer);
-      }
-    });
-  });
+//* Scoring function.
+function updateScoreBoard(isPlayerwinner) {
+  setTimeout(() => {
+    const isTie = isPlayerwinner === "TIE";
+    const scoreBoard = isPlayerwinner ? p1Display : p2Display;
+    const winLose = isPlayerwinner ? "You Win" : "You lose";
+    const declareWinner = isPlayerwinner ? "Player 1 Wins" : "Player 2 Wins";
+    const score = isTie ? scoreBoard.textContent : ++scoreBoard.textContent;
+    display.textContent = isTie ? "Tie" : winLose;
+    scoreBoard.textContent = score;
 
-//! Incorrect code sequence check line 115
-  function animateAndDisplay(isPlayer1Winner, resultText) {
-    animateElement();
-    timeout = setTimeout(() => {
-      let score = isPlayer1Winner ? ++p1Score : ++p2Score;
-      const scoresDisplay = isPlayer1Winner ? p1Display : p2Display;
-      scoresDisplay.textContent = score;
-      display.textContent = resultText;
-      imgDisplay(player, computer);
+    if (score === winningScore) {
+      display.textContent = declareWinner;
       setTimeout(() => {
-        p1GestureDisplay.setAttribute("src", `gestures/Rock.png`);
-        p2GestureDisplay.setAttribute("src", `gestures/Rock.png`);
-      }, 1000);
+        display.textContent = "Press start to play again";
+      }, 2000);
+      menuButtonState(1, true);
+      menuButtonState(0, true);
+    } else {
+      setTimeout(() => {
+        gestureButtonState(true);
+        menuButtonState(1, true);
+        display.textContent = "Pick";
+      }, 900);
+    }
+  }, 800);
+}
 
-      if (score === winningScore) {
-        const winnerText = isPlayer1Winner ? 'Player 1 Wins' : 'Player 2 Wins';
-        isGameActive = false;
-        display.textContent = winnerText;
-        gestureButtonState(false)
-        menuBtns[0].classList.remove("btn-disabled");
-      } else {
-        setTimeout(() => {
-          gestureBtns.forEach(btn => btn.classList.remove("btn-disabled"));
-        }, 1000);
-      }
-    }, 680);
+gestureBtns.forEach((btn) => btn.addEventListener("click", handleGestureClick));
+
+
+
+// ---------- START AND RESET ----------
+
+// * Start and Reset function.
+function startReset(e) {
+  const selectedMenu = e.target.id;
+  btnAnimation(e.target);
+  [p1Score, p2Score] = [0, 0];
+  [p1Display.textContent, p2Display.textContent] = [0, 0];
+
+  if (selectedMenu === "start") {
+    [p1Display.textContent, p2Display.textContent] = [0, 0];
+    display.textContent = "Pick";
+    menuButtonState(0, false);
+    gestureButtonState(true);
+  } else {
+    display.textContent = "Game reset";
+    menuButtonState(0, false);
+    gestureButtonState(false);
+    setTimeout(() => {
+      display.textContent = "Press Start to Play";
+      menuButtonState(0, true);
+    }, 1800);
   }
+}
 
-  function winOrLose(isPlayer1Winner) {
-    const resultText = isPlayer1Winner ? "You Win" : "You lose";
-    animateAndDisplay(isPlayer1Winner, resultText);
-  }
+menuBtns.forEach((btn) => btn.addEventListener("click", startReset));
 
-//! Bug - This still adds a score to the computer even a tie game
-  function tie() {
-    animateAndDisplay(false, "TIE");
-  }
 
-  function imgDisplay(player1, player2) {
+
+// ---------- BUTTONS, ANIMATION, & IMAGE DISPLAY ----------
+
+
+//* ----- IMAGE FUNCTIONS -----
+
+//* Gesture image display function.
+function imgDisplay(player1, player2) {
+  setTimeout(() => {
     [p1GestureImg, p2GestureImg] = [player1, player2];
-    [p1GestureDisplay, p2GestureDisplay] = [gestureDisplay[0], gestureDisplay[1]]
+    [p1GestureDisplay, p2GestureDisplay] = [gestureDisplay[0], gestureDisplay[1],];
     p1GestureDisplay.setAttribute("src", `gestures/${p1GestureImg}.png`);
     p2GestureDisplay.setAttribute("src", `gestures/${p2GestureImg}.png`);
-  }
-
-
-
-  function btnAnimation(btn) {
-    btn.classList.add("btn-clicked");
-    setTimeout(() => btn.classList.remove("btn-clicked"), 100);
-  }
-
-  menuBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      let playerInput = e.target.id;
-      btnAnimation(btn);
-
-      function start(){
-        [p1Score, p2Score] = [0, 0];
-        [p1Display.textContent, p2Display.textContent] = [0, 0];
-        menuBtns[0].classList.add("btn-disabled");
-        isGameActive = true;
-        gestureButtonState(true)
-      }
-
-      function reset(){
-        clearInterval(timeout);
-        [p1Score, p2Score] = [0, 0];
-        [p1Display.textContent, p2Display.textContent, display.textContent] = [0, 0, 'Game reset'];
-        menuBtns[0].classList.add("btn-disabled");
-        gestureDisplay.forEach(gd => gd.setAttribute("src", `gestures/Rock.png`));
-        gestureButtonState(false)
-        setTimeout(() => {
-          display.textContent = "Press Start to Play"
-          menuBtns[0].classList.remove("btn-disabled");
-        },1800)
-        
-      }
-      
-      playerInput == "start" ? start() : reset();
-
-    });
-  });
-
-  // let computer;
-  // let player;
-
-
-  function animateElement(){
-    const containers = [pContainer, cContainer];
-    containers.forEach(container => container.classList.add("gesture-animation"))
-    setTimeout(() => {
-      containers.forEach(container => container.classList.remove("gesture-animation"))
-    }, 1100)
-  }
-
+  }, 849);
 }
 
-gameLoop()
+//* Gesture image animation function.
+function animateElement() {
+  const pContainer = document.querySelector(".player-container");
+  const cContainer = document.querySelector(".computer-container");
+  const containers = [pContainer, cContainer];
+  containers.forEach((container) =>
+    container.classList.add("gesture-animation")
+  );
+  timeout = setTimeout(() => {
+    containers.forEach((container) =>
+      container.classList.remove("gesture-animation")
+    );
+  }, 849);
+  gestureButtonState(false);
+}
+
+//* Gesture image reset function.
+function gestureReset() {
+  setTimeout(() => {
+    p1GestureDisplay.setAttribute("src", `gestures/Rock.png`);
+    p2GestureDisplay.setAttribute("src", `gestures/Rock.png`);
+  }, 1700);
+}
 
 
+//* ----- BUTTON FUNCTIONS -----
+
+//* Buttons Animation.
+function btnAnimation(btn) {
+  btn.classList.add("btn-clicked");
+  setTimeout(() => btn.classList.remove("btn-clicked"), 100);
+}
+
+//* Gesture Buttons on & off.
+function gestureButtonState(isButtonActive) {
+  if (isButtonActive) {
+    gestureBtns.forEach((btn) => btn.classList.remove("btn-disabled"));
+  } else {
+    gestureBtns.forEach((btn) => btn.classList.add("btn-disabled"));
+  }
+}
+
+//* Menu Buttons on & off.
+function menuButtonState(index, isButtonActive) {
+  if (isButtonActive) {
+    menuBtns[index].classList.remove("btn-disabled");
+  } else {
+    menuBtns[index].classList.add("btn-disabled");
+  }
+}
 
 
 git push --set-upstream https://github.com/choMatt/RockPaperScissor.git main
