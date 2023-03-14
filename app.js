@@ -10,11 +10,6 @@ let winningScore = 3;
 let p1Score = 0;
 let p2Score = 0;
 
-//todo : add comments to clarify the code for other devs
-
-//* This sets the gesture buttons to a disabled state.
-gestureButtonState(false);
-
 
 // ---------- PLAYERS  ----------
 
@@ -41,7 +36,7 @@ async function runGameRound(e) {
   const player2 = playerTwo();
   const isPlayerwinner = getWinner(player1, player2);
   btnAnimation(e.target);
-  menuButtonState(1, false);
+  toggleMenuButtonState(1, false);
   await animateElement();
   await imgDisplay(player1, player2);
   updateScoreBoard(isPlayerwinner);
@@ -50,14 +45,19 @@ async function runGameRound(e) {
 
 //* Win and Lose function.
 function getWinner(player1, player2) {
-  if (player1 == player2) return "TIE";
-  else if (player1 == "Rock" && player2 == "Scissor") return true;
-  else if (player1 == "Rock" && player2 == "Paper") return false;
-  else if (player1 == "Paper" && player2 == "Rock") return true;
-  else if (player1 == "Paper" && player2 == "Scissor") return false;
-  else if (player1 == "Scissor" && player2 == "Paper") return true;
-  else if (player1 == "Scissor" && player2 == "Rock") return false;
-}
+  if (player1 === player2) return "TIE";
+  
+  if (
+    (player1 === "Rock" && player2 === "Scissor") ||
+    (player1 === "Paper" && player2 === "Rock") ||
+    (player1 === "Scissor" && player2 === "Paper")
+  ) {
+    return true;
+  }
+  
+  return false;
+  }
+
 
 //* Scoring function.
 function updateScoreBoard(isPlayerwinner) {
@@ -75,12 +75,12 @@ function updateScoreBoard(isPlayerwinner) {
       setTimeout(() => {
         display.textContent = "Press start to play again";
       }, 2000);
-      menuButtonState(1, true);
-      menuButtonState(0, true);
+      toggleMenuButtonState(1, true);
+      toggleMenuButtonState(0, true);
     } else {
       setTimeout(() => {
-        gestureButtonState(true);
-        menuButtonState(1, true);
+        toggleGestureButtonState(true);
+        toggleMenuButtonState(1, true);
         display.textContent = "Pick";
       }, 900);
     }
@@ -88,7 +88,6 @@ function updateScoreBoard(isPlayerwinner) {
 }
 
 gestureBtns.forEach((btn) => btn.addEventListener("click", runGameRound));
-
 
 
 // ---------- START AND RESET ----------
@@ -102,21 +101,20 @@ function startOrReset(e) {
   
   if (selectedMenu === "start") {
     display.textContent = "Pick";
-    menuButtonState(0, false);
-    gestureButtonState(true);
+    toggleMenuButtonState(0, false);
+    toggleGestureButtonState(true);
   } else {
     display.textContent = "Game reset";
-    menuButtonState(0, false);
-    gestureButtonState(false);
+    toggleMenuButtonState(0, false);
+    toggleGestureButtonState(false);
     setTimeout(() => {
       display.textContent = "Press Start to Play";
-      menuButtonState(0, true);
+      toggleMenuButtonState(0, true);
     }, 1800);
   }
 }
 
 menuBtns.forEach((btn) => btn.addEventListener("click", startOrReset));
-
 
 
 // ---------- BUTTONS, ANIMATION, & IMAGE DISPLAY ----------
@@ -126,9 +124,10 @@ menuBtns.forEach((btn) => btn.addEventListener("click", startOrReset));
 
 //* Gesture image display function.
 function imgDisplay(player1, player2) {
+  [p1GestureImg, p2GestureImg] = [player1, player2];
+  [p1GestureDisplay, p2GestureDisplay] = [gestureDisplay[0], gestureDisplay[1]];
+
   setTimeout(() => {
-    [p1GestureImg, p2GestureImg] = [player1, player2];
-    [p1GestureDisplay, p2GestureDisplay] = [gestureDisplay[0], gestureDisplay[1],];
     p1GestureDisplay.setAttribute("src", `gestures/${p1GestureImg}.png`);
     p2GestureDisplay.setAttribute("src", `gestures/${p2GestureImg}.png`);
   }, 849);
@@ -139,25 +138,23 @@ function animateElement() {
   const pContainer = document.querySelector(".player-container");
   const cContainer = document.querySelector(".computer-container");
   const containers = [pContainer, cContainer];
-  containers.forEach((container) =>
-    container.classList.add("gesture-animation")
-  );
+  containers.forEach(container => container.classList.add("gesture-animation"));
   timeout = setTimeout(() => {
     containers.forEach((container) =>
       container.classList.remove("gesture-animation")
     );
   }, 849);
-  gestureButtonState(false);
+
+
+  toggleGestureButtonState(false);
 }
 
 //* Gesture image reset function.
 function gestureReset() {
   setTimeout(() => {
-    p1GestureDisplay.setAttribute("src", `gestures/Rock.png`);
-    p2GestureDisplay.setAttribute("src", `gestures/Rock.png`);
+    [p1GestureDisplay.src, p2GestureDisplay.src] = [`gestures/Rock.png`, `gestures/Rock.png`];
   }, 1700);
 }
-
 
 //* ----- BUTTON FUNCTIONS -----
 
@@ -168,22 +165,15 @@ function btnAnimation(btn) {
 }
 
 //* Gesture Buttons on & off.
-function gestureButtonState(isButtonActive) {
-  if (isButtonActive) {
-    gestureBtns.forEach((btn) => btn.classList.remove("btn-disabled"));
-  } else {
-    gestureBtns.forEach((btn) => btn.classList.add("btn-disabled"));
-  }
+function toggleGestureButtonState(isEnabled) {
+  gestureBtns.forEach((btn) => btn.classList.toggle("btn-disabled", !isEnabled));
 }
 
 //* Menu Buttons on & off.
-function menuButtonState(index, isButtonActive) {
-  if (isButtonActive) {
-    menuBtns[index].classList.remove("btn-disabled");
-  } else {
-    menuBtns[index].classList.add("btn-disabled");
-  }
+
+function toggleMenuButtonState(index, isEnabled) {
+  const classListMethod = isEnabled ? "remove" : "add";
+  menuBtns[index].classList[classListMethod]("btn-disabled");
 }
 
-
-
+wsrthsfghsfghsfghsfghsfgh
