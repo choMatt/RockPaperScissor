@@ -1,3 +1,4 @@
+
 const gestureBtns = document.querySelectorAll(".gesture-btn");
 const menuBtns = document.querySelectorAll(".menu-btn");
 const display = document.querySelector(".text-display");
@@ -176,4 +177,3 @@ function toggleMenuButtonState(index, isEnabled) {
   menuBtns[index].classList[classListMethod]("btn-disabled");
 }
 
-wsrthsfghsfghsfghsfghsfgh
