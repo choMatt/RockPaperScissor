@@ -6,7 +6,7 @@ const gestureDisplay = document.querySelectorAll(".gesture-display");
 const p1Display = document.querySelector("#p1Display");
 const p2Display = document.querySelector("#p2Display");
 
-let winningScore = 3;
+let winningScore = 5;
 let p1Score = 0;
 let p2Score = 0;
 
