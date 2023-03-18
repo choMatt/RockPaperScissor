@@ -31,6 +31,9 @@ function playerTwo() {
 
 // ---------- GAME SEQUENCE/LOOP ----------
 
+
+toggleGestureButtonState(false)
+
 //* Winner and animation handler.
 async function runGameRound(e) {
   const player1 = playerOne(e);
