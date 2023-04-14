@@ -12,7 +12,7 @@ let p1Score = 0;
 let p2Score = 0;
 
 
-// ---------- PLAYERS  ----------
+// > ---------- PLAYERS  ----------
 
 // * Player 1 options.
 function playerOne(e) {
@@ -36,6 +36,7 @@ toggleGestureButtonState(false)
 
 //* Winner and animation handler.
 async function runGameRound(e) {
+  console.log(e)
   const player1 = playerOne(e);
   const player2 = playerTwo();
   const isPlayerwinner = getWinner(player1, player2);
@@ -46,6 +47,8 @@ async function runGameRound(e) {
   updateScoreBoard(isPlayerwinner);
   await gestureReset();
 }
+
+
 
 //* Win and Lose function.
 function getWinner(player1, player2) {

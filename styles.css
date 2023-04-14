@@ -17,7 +17,7 @@ ul{
 }
 
 .main-window{
-    width: 75em; height: 100vh;
+    width: 75em; height: 10in;
     border: 6px solid black;
     background-color: white;
 }
