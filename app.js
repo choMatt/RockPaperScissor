@@ -1,11 +1,6 @@
 
 const gestureBtns = document.querySelectorAll(".gesture-btn");
 const menuBtns = document.querySelectorAll(".menu-btn");
-const display = document.querySelector(".text-display");
-const images = document.querySelectorAll(".gesture-img");
-const gestureDisplay = document.querySelectorAll(".gesture-display");
-const p1Display = document.querySelector("#p1Display");
-const p2Display = document.querySelector("#p2Display");
 
 let winningScore = 5;
 let p1Score = 0;
@@ -36,7 +31,6 @@ toggleGestureButtonState(false)
 
 //* Winner and animation handler.
 async function runGameRound(e) {
-  console.log(e)
   const player1 = playerOne(e);
   const player2 = playerTwo();
   const isPlayerwinner = getWinner(player1, player2);
@@ -69,6 +63,8 @@ function getWinner(player1, player2) {
 //* Scoring function.
 function updateScoreBoard(isPlayerwinner) {
   setTimeout(() => {
+    const p1Display = document.querySelector("#p1Display");
+    const p2Display = document.querySelector("#p2Display");
     const isTie = isPlayerwinner === "TIE";
     const scoreBoard = isPlayerwinner ? p1Display : p2Display;
     const winLose = isPlayerwinner ? "You Win" : "You lose";
@@ -100,6 +96,8 @@ gestureBtns.forEach((btn) => btn.addEventListener("click", runGameRound));
 // ---------- START AND RESET ----------
 
 // * Start and Reset function.
+const display = document.querySelector(".text-display");
+
 function startOrReset(e) {
   const selectedMenu = e.target.id;
   [p1Score, p2Score] = [0, 0];
@@ -130,6 +128,8 @@ menuBtns.forEach((btn) => btn.addEventListener("click", startOrReset));
 //* ----- IMAGE FUNCTIONS -----
 
 //* Gesture image display function.
+const gestureDisplay = document.querySelectorAll(".gesture-display");
+
 function imgDisplay(player1, player2) {
   [p1GestureImg, p2GestureImg] = [player1, player2];
   [p1GestureDisplay, p2GestureDisplay] = [gestureDisplay[0], gestureDisplay[1]];
