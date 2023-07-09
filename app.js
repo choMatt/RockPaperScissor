@@ -68,7 +68,7 @@ function updateScoreBoard(isPlayerwinner) {
     const isTie = isPlayerwinner === "TIE";
     const scoreBoard = isPlayerwinner ? p1Display : p2Display;
     const winLose = isPlayerwinner ? "You Win" : "You lose";
-    const declareWinner = isPlayerwinner ? "Player 1 Wins" : "Player 2 Wins";
+    const declareWinner = isPlayerwinner ? "Bryan Picao Wins" : "Player 2 Wins";
     const score = isTie ? scoreBoard.textContent : ++scoreBoard.textContent;
     display.textContent = isTie ? "Tie" : winLose;
     scoreBoard.textContent = score;
@@ -137,7 +137,7 @@ function imgDisplay(player1, player2) {
   setTimeout(() => {
     p1GestureDisplay.setAttribute("src", `gestures/${p1GestureImg}.png`);
     p2GestureDisplay.setAttribute("src", `gestures/${p2GestureImg}.png`);
-  }, 849);
+  }, 845);
 }
 
 //* Gesture image animation function.
@@ -146,7 +146,7 @@ function animateElement() {
   const cContainer = document.querySelector(".computer-container");
   const containers = [pContainer, cContainer];
   containers.forEach(container => container.classList.add("gesture-animation"));
-  timeout = setTimeout(() => {
+   setTimeout(() => {
     containers.forEach((container) =>
       container.classList.remove("gesture-animation")
     );
