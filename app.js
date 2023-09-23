@@ -68,7 +68,7 @@ function updateScoreBoard(isPlayerwinner) {
     const isTie = isPlayerwinner === "TIE";
     const scoreBoard = isPlayerwinner ? p1Display : p2Display;
     const winLose = isPlayerwinner ? "You Win" : "You lose";
-    const declareWinner = isPlayerwinner ? "Gab Flores Wins" : "Player 2 Wins";
+    const declareWinner = isPlayerwinner ? "Gab Flores Win" : "Player 2 Wins";
     const score = isTie ? scoreBoard.textContent : ++scoreBoard.textContent;
     display.textContent = isTie ? "Tie" : winLose;
     scoreBoard.textContent = score;
