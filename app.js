@@ -87,7 +87,7 @@ function updateScoreBoard(isPlayerwinner) {
         display.textContent = "Pick";
       }, 900);
     }
-  }, 800);
+  }, 1000);
 }
 
 gestureBtns.forEach((btn) => btn.addEventListener("click", runGameRound));
